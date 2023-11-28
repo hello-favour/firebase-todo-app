@@ -10,11 +10,15 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   bool today = true, tomorrow = false, nextweek = false;
   bool suggest = false;
+
+  TextEditingController todoController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          openBox();
+        },
         child: Icon(
           Icons.add,
           color: Color(0xFF249fff),
@@ -197,4 +201,73 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+  Future openBox() => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: SingleChildScrollView(
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: Icon(Icons.cancel),
+                      ),
+                      SizedBox(width: 60),
+                      Text(
+                        "Add the work Todo",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff008080),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 20.0),
+                  Text("Add Text"),
+                  SizedBox(height: 10.0),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black38,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: TextField(
+                      controller: todoController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Enter text",
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20.0),
+                  Center(
+                    child: Container(
+                      width: 100,
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Color(0xFF008080),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Add",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
 }
